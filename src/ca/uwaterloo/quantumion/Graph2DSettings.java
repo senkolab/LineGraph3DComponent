@@ -62,8 +62,8 @@ public class Graph2DSettings {
         _BGColor = Color.BLACK;
         _GridColor = Color.DARK_GRAY;
 
-        _XLimits = new DrawingLimits(-1.0, 1.0, 0, 10);
-        _YLimits = new DrawingLimits(-1.0, 1.0, 0, 100);
+        _XLimits = new DrawingLimits(-1.0, 1.0, 0, 100);
+        _YLimits = new DrawingLimits(-1.0, 1.0, 0, 200);
 
         _XScaler = new LinearScaler();
         _YScaler = new LinearScaler(-1.0, 0.0);
@@ -211,6 +211,22 @@ public class Graph2DSettings {
     }
 
     /**
+     * Grid labels
+     * @return 
+     */
+    public String[] getXMajorGridLabels() {
+        return _XMajorGridLabels;
+    }
+    
+    /**
+     * Grid labels
+     * @param s 
+     */
+    public void getXMajorGridLabels(String[] s) {
+        _XMajorGridLabels = s;
+    }
+    
+    /**
      * Y major grid points. Setting this will disable autogridding for Y axis
      *
      * @return
@@ -230,6 +246,22 @@ public class Graph2DSettings {
         updateGrid();
     }
 
+    /**
+     * Grid labels
+     * @return 
+     */
+    public String[] getYMajorGridLabels() {
+        return _YMajorGridLabels;
+    }
+    
+    /**
+     * Grid labels
+     * @param s 
+     */
+    public void getYMajorGridLabels(String[] s) {
+        _YMajorGridLabels = s;
+    }
+    
     /**
      * X minor grid points. Setting this will disable autogridding for X axis
      *
@@ -251,6 +283,22 @@ public class Graph2DSettings {
     }
 
     /**
+     * Grid labels
+     * @return 
+     */
+    public String[] getXMinorGridLabels() {
+        return _XMinorGridLabels;
+    }
+    
+    /**
+     * Grid labels
+     * @param s 
+     */
+    public void getXMinorGridLabels(String[] s) {
+        _XMinorGridLabels = s;
+    }
+    
+    /**
      * Y minor grid points. Setting this will disable autogridding for Y axis
      *
      * @return
@@ -270,6 +318,22 @@ public class Graph2DSettings {
         updateGrid();
     }
 
+    /**
+     * Grid labels
+     * @return 
+     */
+    public String[] getYMinorGridLabels() {
+        return _YMinorGridLabels;
+    }
+    
+    /**
+     * Grid labels
+     * @param s 
+     */
+    public void getYMinorGridLabels(String[] s) {
+        _YMinorGridLabels = s;
+    }
+    
     /**
      * X auto grid calculator
      *
