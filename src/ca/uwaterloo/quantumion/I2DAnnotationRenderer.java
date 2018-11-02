@@ -1,6 +1,4 @@
 
-import java.awt.Graphics;
-
 /*
  * Copyright 2018 Rich.
  *
@@ -16,6 +14,10 @@ import java.awt.Graphics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package ca.uwaterloo.quantumion;
+
+import java.awt.Graphics;
+
 /**
  * Defines the interface for an annotation renderer
  *
