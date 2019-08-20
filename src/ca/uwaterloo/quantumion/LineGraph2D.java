@@ -34,13 +34,14 @@ import javax.swing.JPanel;
  */
 public final class LineGraph2D extends JPanel implements ComponentListener {
 
+
     /**
      * All settings member object
      */
     protected Graph2DSettings _Settings;
     protected ISimpleRenderer _BackgroundRenderer;
     protected ISimpleRenderer _GridRenderer;
-    protected ITraceRenderer _TraceRenderer;
+    private ITraceRenderer _TraceRenderer;
     protected List<Graph2DTrace> _Traces;
     protected ICameraProjector _Projector;
 
@@ -192,7 +193,7 @@ public final class LineGraph2D extends JPanel implements ComponentListener {
      */
     public void SetTraces(Graph2DTrace[] traces) {
 
-        _TraceRenderer.Reset();
+        getTraceRenderer().Reset();
         _Traces.clear();
 
         for (Graph2DTrace t : traces) {
@@ -251,7 +252,7 @@ public final class LineGraph2D extends JPanel implements ComponentListener {
      */
     public void SetTrace(Graph2DTrace t) {
 
-        _TraceRenderer.Reset();
+        getTraceRenderer().Reset();
         _Traces.clear();
         _AddTrace(t);
         invalidate();
@@ -384,7 +385,7 @@ public final class LineGraph2D extends JPanel implements ComponentListener {
 
         _BackgroundRenderer = new SimpleBackgroundRenderer();
         _GridRenderer = new SimpleGridRenderer();
-        _TraceRenderer = new SimpleTraceRenderer();
+        setTraceRenderer(new SimpleTraceRenderer());
         _Traces = new LinkedList<>();
         _Settings.setXAutoGrid(true);
         _Settings.setYAutoGrid(true);
@@ -416,7 +417,7 @@ public final class LineGraph2D extends JPanel implements ComponentListener {
 
         // draw each traces
         for (int n = 0; n < _Traces.size(); n++) {
-            _TraceRenderer.RenderTrace(gc_img, _Settings, _Traces.get(n), n);
+            getTraceRenderer().RenderTrace(gc_img, _Settings, _Traces.get(n), n);
         }
 
         // draw canvas
@@ -427,10 +428,10 @@ public final class LineGraph2D extends JPanel implements ComponentListener {
      * Recalculate dimensions
      */
     public void resize() {
-        _Settings.getXLimits().setPixMin(getX());
-        _Settings.getXLimits().setPixMax(getX() + getWidth());
-        _Settings.getYLimits().setPixMin(getY());
-        _Settings.getYLimits().setPixMax(getY() + getHeight());
+        _Settings.getXLimits().setPixMin(0);
+        _Settings.getXLimits().setPixMax(getWidth());
+        _Settings.getYLimits().setPixMin(0);
+        _Settings.getYLimits().setPixMax(getHeight());
     }
 
     @Override
@@ -452,6 +453,21 @@ public final class LineGraph2D extends JPanel implements ComponentListener {
     @Override
     public void componentHidden(ComponentEvent ce) {
         // do nothing
+    }
+    
+    /**
+     * @return the _TraceRenderer
+     */
+    public ITraceRenderer getTraceRenderer() {
+        return _TraceRenderer;
+    }
+
+    /**
+     * @param _TraceRenderer the _TraceRenderer to set
+     */
+    public void setTraceRenderer(ITraceRenderer _TraceRenderer) {
+        this._TraceRenderer = _TraceRenderer;
+        this.invalidate();
     }
 
 }
