@@ -59,13 +59,13 @@ public class Simple2DAnnotation implements I2DAnnotationRenderer, ISimpleRendere
     public Simple2DAnnotation(LineGraph2D Graph) {
         _Graph = Graph;
         _GridLabelFont = new Font("Arial", Font.PLAIN, 8);
-        _GridLabelColor = Color.WHITE;
+        _GridLabelColor = Color.BLACK;
 
         _AxisLabelFont = new Font("Arial", Font.PLAIN, 8);
-        _AxisLabelColor = Color.WHITE;
+        _AxisLabelColor = Color.BLACK;
 
         _TitleFont = new Font("Arial", Font.PLAIN, 12);
-        _TitleFontColor = Color.WHITE;
+        _TitleFontColor = Color.BLACK;
 
         _XLabel = "XLabel";
         _YLabel = "Ylabel";

@@ -365,58 +365,7 @@ public class LineGraph2DTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of componentResized method, of class LineGraph2D.
-     */
-    @Test
-    public void testComponentResized() {
-        System.out.println("componentResized");
-        ComponentEvent ce = null;
-        LineGraph2D instance = new LineGraph2D();
-        instance.componentResized(ce);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of componentMoved method, of class LineGraph2D.
-     */
-    @Test
-    public void testComponentMoved() {
-        System.out.println("componentMoved");
-        ComponentEvent ce = null;
-        LineGraph2D instance = new LineGraph2D();
-        instance.componentMoved(ce);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of componentShown method, of class LineGraph2D.
-     */
-    @Test
-    public void testComponentShown() {
-        System.out.println("componentShown");
-        ComponentEvent ce = null;
-        LineGraph2D instance = new LineGraph2D();
-        instance.componentShown(ce);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of componentHidden method, of class LineGraph2D.
-     */
-    @Test
-    public void testComponentHidden() {
-        System.out.println("componentHidden");
-        ComponentEvent ce = null;
-        LineGraph2D instance = new LineGraph2D();
-        instance.componentHidden(ce);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
+  
     public static int main(String[] args) {
         SwingUtilities.invokeLater(() -> {
 

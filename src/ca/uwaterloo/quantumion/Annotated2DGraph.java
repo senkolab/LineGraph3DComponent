@@ -15,10 +15,16 @@
  */
 package ca.uwaterloo.quantumion;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.LayoutManager;
 import java.awt.Point;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * Annotated 2D graph with controls
@@ -32,13 +38,15 @@ public class Annotated2DGraph extends JPanel {
     protected AnnotationMargins _Margins = new AnnotationMargins(10, 10, 10, 25);
     protected ISimpleRenderer _Annotator;
     protected LineGraph2D _Graph;
-
+    protected TitlePanel _TitlePanel;
+    
     /**
      * constructor
      */
     public Annotated2DGraph() {
         _Graph = new LineGraph2D();
         _Annotator = new Simple2DAnnotation(_Graph);
+        _TitlePanel = new TitlePanel();
         this.Initialize();
     }
 
@@ -73,7 +81,7 @@ public class Annotated2DGraph extends JPanel {
     /**
      * Annotation handler
      *
-     * @return
+     * @param r
      */
     public void setAnnotator(ISimpleRenderer r) {
         _Annotator = r;
@@ -82,6 +90,7 @@ public class Annotated2DGraph extends JPanel {
 
     /**
      * Graph portion of the component
+     * @return 
      */
     public LineGraph2D getGraph() {
         return _Graph;
@@ -89,6 +98,7 @@ public class Annotated2DGraph extends JPanel {
 
     /**
      * Graph portion of the component
+     * @param g
      */
     public void setGraph(LineGraph2D g) {
         _Graph = g;
@@ -98,12 +108,18 @@ public class Annotated2DGraph extends JPanel {
     /**
      * Set up initial component settings after all objects have been created
      */
-    public void Initialize() {
-        SetMargins(10, 10, 10, 25);
-        this.add(_Graph);
+    public final void Initialize() {
+        //SetMargins(10, 10, 10, 25);
+        LayoutManager lm = new GraphLayoutManager();
+        this.setLayout(lm);
+        this.add(_Graph, GraphLayoutManager.CENTER);
         _Graph.setVisible(true);
-        _Annotator = new Simple2DAnnotation(_Graph);
-
+        this.add(_TitlePanel, GraphLayoutManager.TOP);
+        _TitlePanel.setVisible(true);
+        
+        this.setBounds(0, 0, 100, 100);
+        this.setVisible(true);
+        
     }
 
     /**
@@ -146,8 +162,66 @@ public class Annotated2DGraph extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        _Graph.invalidate();
         _Annotator.Render(g, _Graph.getSettings());
+        //_Graph.invalidate();
     }
 
+    /**
+     * Title Object
+     */
+    protected final class TitlePanel extends JLabel
+    {
+        public String _text;
+        
+        /**
+         * Constructor
+         */
+        public TitlePanel() {
+            this.setVisible(true);
+            this.setHorizontalAlignment(SwingConstants.CENTER);
+            this.setVerticalAlignment(SwingConstants.CENTER);
+            this.setTitle("Title");
+        }
+        
+        /**
+         * Set the object title
+         * @param s 
+         */
+        public void setTitle(String s)
+        {
+            _text =  "Title";
+            this.setText(_text);
+            int h = this.getFontMetrics(this.getFont()).getHeight();
+            if(_text.isBlank())
+                h = 10;
+            this.setPreferredSize(new Dimension(10,h));
+        }
+        
+        /**
+         * Get the object title
+         * @return 
+         */
+        public String getString() 
+        {
+            return getText();
+        }
+        
+        /**
+         * Set color
+         * @param c 
+         */
+        public void setColor(Color c)
+        {
+            setForeground(c);
+        }
+        
+        /**
+         * Get color
+         * @return 
+         */
+        public Color getColor()
+        {
+            return getForeground();
+        }
+    }
 }
