@@ -42,7 +42,9 @@ public class SimpleLinearAutoGrid implements IAutoGridder {
         double[] val;
 
         // use lookup table to figure out the delta steps (in log)
-        if (mant <= 2.5) {
+        if (mant <= 1.0) {
+            delta_exp = 0.25;
+        } else if (mant <= 2.5) {
             delta_exp = 0.5;
         } else if (mant <= 4.0) {
             delta_exp = 1.0;

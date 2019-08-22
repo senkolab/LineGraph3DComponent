@@ -55,7 +55,9 @@ public class Simple2DProjector implements ICameraProjector {
         DrawingLimits yl = settings.getYLimits();
 
         result[0] = xl.getPixMin() + (int) Math.round((x - xl.getValueMin()) * ((double) xl.dPixel() / (double) xl.dValue()));
-        result[1] = yl.getPixMin() + (int) Math.round((y - yl.getValueMin()) * ((double) yl.dPixel() / (double) yl.dValue()));
+        
+        // Special math for top=origin coordinate systems common in raster video cards
+        result[1] = yl.getPixMax() - (int) Math.round((y - yl.getValueMin()) * ((double) yl.dPixel() / (double) yl.dValue()));
 
         return result;
     }
