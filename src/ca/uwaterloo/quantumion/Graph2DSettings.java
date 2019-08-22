@@ -51,7 +51,8 @@ public class Graph2DSettings {
     public String _YMinorGridLabels[] = new String[0];
     public String _ZMajorGridLabels[] = new String[0];
     public String _ZMinorGridLabels[] = new String[0];
-
+    private int _StemHeadSize = 10;
+    
     /**
      * Constructor
      */
@@ -515,5 +516,21 @@ public class Graph2DSettings {
      */
     public ICameraProjector getProjector() {
         return _Projector;
+    }
+    
+    /**
+     * Set the size of the head for "stem" type plots
+     * @param value 
+     */
+    public void setStemHeadSize(int value) {
+        _StemHeadSize = value;
+    }
+    
+    /**
+     * Get the value of the head for "stem" type plots
+     * @return 
+     */
+    public int getStemHeadSize() {
+        return _StemHeadSize;
     }
 }

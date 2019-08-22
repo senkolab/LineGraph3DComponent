@@ -51,4 +51,15 @@ public interface I2DAnnotationRenderer {
      */
     public void RenderYLabel(Graphics gc, String YLabel);
 
+    /**
+     * Render the X axis grid labels
+     * @param gc 
+     */
+    public void RenderXGridLabels(Graphics gc);
+    
+    /**
+     * Render the Y axis grid labels
+     * @param gc 
+     */
+    public void RenderYGridLabels(Graphics gc);
 }

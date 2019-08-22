@@ -15,10 +15,8 @@
  */
 package ca.uwaterloo.quantumion;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
 import java.awt.Point;
@@ -36,17 +34,19 @@ import javax.swing.SwingConstants;
 public class Annotated2DGraph extends JPanel {
 
     protected AnnotationMargins _Margins = new AnnotationMargins(10, 10, 10, 25);
-    protected ISimpleRenderer _Annotator;
     protected LineGraph2D _Graph;
     protected TitlePanel _TitlePanel;
-    
+    protected XAnnotationPanel _XPanel;
+    protected YAnnotationPanel _YPanel;
+
     /**
      * constructor
      */
     public Annotated2DGraph() {
         _Graph = new LineGraph2D();
-        _Annotator = new Simple2DAnnotation(_Graph);
         _TitlePanel = new TitlePanel();
+        _XPanel = new XAnnotationPanel(_Graph);
+        _YPanel = new YAnnotationPanel(_Graph);
         this.Initialize();
     }
 
@@ -70,27 +70,9 @@ public class Annotated2DGraph extends JPanel {
     }
 
     /**
-     * Annotation handler
+     * Graph portion of the component
      *
      * @return
-     */
-    public ISimpleRenderer getAnnotator() {
-        return _Annotator;
-    }
-
-    /**
-     * Annotation handler
-     *
-     * @param r
-     */
-    public void setAnnotator(ISimpleRenderer r) {
-        _Annotator = r;
-        invalidate();
-    }
-
-    /**
-     * Graph portion of the component
-     * @return 
      */
     public LineGraph2D getGraph() {
         return _Graph;
@@ -98,6 +80,7 @@ public class Annotated2DGraph extends JPanel {
 
     /**
      * Graph portion of the component
+     *
      * @param g
      */
     public void setGraph(LineGraph2D g) {
@@ -116,10 +99,14 @@ public class Annotated2DGraph extends JPanel {
         _Graph.setVisible(true);
         this.add(_TitlePanel, GraphLayoutManager.TOP);
         _TitlePanel.setVisible(true);
-        
+        this.add(_XPanel, GraphLayoutManager.BOTTOM);
+        _XPanel.setVisible(true);
+        this.add(_YPanel, GraphLayoutManager.LEFT);
+        _YPanel.setVisible(true);
+
         this.setBounds(0, 0, 100, 100);
         this.setVisible(true);
-        
+
     }
 
     /**
@@ -137,7 +124,7 @@ public class Annotated2DGraph extends JPanel {
         _Margins.Left = left;
 
         this.setMinimumSize(new Dimension(_Margins.Left + _Margins.Right + _Graph.getMinimumSize().width,
-            _Margins.Top + _Margins.Bottom + _Graph.getMinimumSize().height));
+                _Margins.Top + _Margins.Bottom + _Graph.getMinimumSize().height));
         invalidate();
 
     }
@@ -147,32 +134,19 @@ public class Annotated2DGraph extends JPanel {
      */
     public void ResizeGraph() {
         _Graph.setSize(new Dimension(getWidth() - _Margins.Left - _Margins.Right,
-            getHeight() - _Margins.Top - _Margins.Bottom));
+                getHeight() - _Margins.Top - _Margins.Bottom));
 
         _Graph.setLocation(new Point(_Margins.Left, _Margins.Bottom));
         _Graph.invalidate();
     }
 
     /**
-     * Paint the component handler
-     *
-     * @param g
-     */
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        _Annotator.Render(g, _Graph.getSettings());
-        //_Graph.invalidate();
-    }
-
-    /**
      * Title Object
      */
-    protected final class TitlePanel extends JLabel
-    {
+    protected final class TitlePanel extends JLabel {
+
         public String _text;
-        
+
         /**
          * Constructor
          */
@@ -182,46 +156,182 @@ public class Annotated2DGraph extends JPanel {
             this.setVerticalAlignment(SwingConstants.CENTER);
             this.setTitle("Title");
         }
-        
+
         /**
          * Set the object title
-         * @param s 
+         *
+         * @param s
          */
-        public void setTitle(String s)
-        {
-            _text =  "Title";
+        public void setTitle(String s) {
+            _text = "Title";
             this.setText(_text);
             int h = this.getFontMetrics(this.getFont()).getHeight();
-            if(_text.isBlank())
+            if (_text.isBlank()) {
                 h = 10;
-            this.setPreferredSize(new Dimension(10,h));
+            }
+            this.setPreferredSize(new Dimension(10, h));
         }
-        
+
         /**
          * Get the object title
-         * @return 
+         *
+         * @return
          */
-        public String getString() 
-        {
+        public String getString() {
             return getText();
         }
-        
+
         /**
          * Set color
-         * @param c 
+         *
+         * @param c
          */
-        public void setColor(Color c)
-        {
+        public void setColor(Color c) {
             setForeground(c);
         }
-        
+
         /**
          * Get color
-         * @return 
+         *
+         * @return
          */
-        public Color getColor()
-        {
+        public Color getColor() {
             return getForeground();
         }
     }
+
+    /**
+     * X annotation label panel
+     */
+    private class XAnnotationPanel extends JPanel {
+
+        /**
+         * Annotation rendering object
+         */
+        private I2DAnnotationRenderer _annotation;
+
+        /**
+         * text label for the graphic
+         */
+        private String _label;
+
+        /**
+         * Constructor
+         *
+         * @param graph
+         */
+        public XAnnotationPanel(LineGraph2D graph) {
+            _annotation = new Panel2DAnnotation(graph, this);
+            this.setPreferredSize(new Dimension(20, 20));
+        }
+
+        /**
+         * Redraw the panel
+         *
+         * @param g
+         */
+        @Override
+        public void paint(Graphics g) {
+            super.paint(g);
+            getAnnotation().RenderXGridLabels(g);
+        }
+
+        /**
+         * @return the _annotation
+         */
+        public I2DAnnotationRenderer getAnnotation() {
+            return _annotation;
+        }
+
+        /**
+         * @param _annotation the _annotation to set
+         */
+        public void setAnnotation(I2DAnnotationRenderer _annotation) {
+            this._annotation = _annotation;
+            invalidate();
+        }
+
+        /**
+         * @return the _label
+         */
+        public String getLabel() {
+            return _label;
+        }
+
+        /**
+         * @param _label the _label to set
+         */
+        public void setLabel(String _label) {
+            this._label = _label;
+            invalidate();
+        }
+    }
+
+    /**
+     * Y annotation label panel
+     */
+    private class YAnnotationPanel extends JPanel {
+
+        /**
+         * Annotation rendering object
+         */
+        private I2DAnnotationRenderer _annotation;
+
+        /**
+         * text label for the graphic
+         */
+        private String _label;
+
+        /**
+         * Constructor
+         *
+         * @param annotation
+         */
+        public YAnnotationPanel(LineGraph2D graph) {
+            _annotation = new Panel2DAnnotation(graph, this);
+            this.setPreferredSize(new Dimension(50, 20));
+        }
+
+        /**
+         * Redraw the panel
+         *
+         * @param g
+         */
+        @Override
+        public void paint(Graphics g) {
+            super.paint(g);
+            getAnnotation().RenderYGridLabels(g);
+        }
+
+        /**
+         * @return the _annotation
+         */
+        public I2DAnnotationRenderer getAnnotation() {
+            return _annotation;
+        }
+
+        /**
+         * @param _annotation the _annotation to set
+         */
+        public void setAnnotation(I2DAnnotationRenderer _annotation) {
+            this._annotation = _annotation;
+            invalidate();
+        }
+
+        /**
+         * @return the _label
+         */
+        public String getLabel() {
+            return _label;
+        }
+
+        /**
+         * @param _label the _label to set
+         */
+        public void setLabel(String _label) {
+            this._label = _label;
+            invalidate();
+        }
+    }
+
 }

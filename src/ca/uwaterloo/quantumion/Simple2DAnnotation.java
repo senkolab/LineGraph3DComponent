@@ -238,26 +238,29 @@ public class Simple2DAnnotation implements I2DAnnotationRenderer, ISimpleRendere
      * Render all X grid labels
      *
      * @param gc
-     * @param settings
      */
-    public void RenderXGridLabels(Graphics gc, Graph2DSettings settings) {
-        double[] gridlines = _Graph.getSettings().getXMajorGrid();
-        String[] gridlabels = _Graph.getSettings().getXMajorGridLabels();
-        ICameraProjector proj = _Graph.getSettings().getProjector();
-        double ymin = _Graph.getSettings().getYLimits().getValueMin();
+    public void RenderXGridLabels(Graphics gc) {
+        
+        Graphics2D g2 = (Graphics2D) gc;
+        Graph2DSettings s = _Graph.getSettings();
+        double[] gridlines = s.getXMajorGrid();
+        String[] gridlabels = s.getXMajorGridLabels();
+        ICameraProjector proj = s.getProjector();
+        double ymin = s.getYLimits().getValueMin();
 
         int[] xy;
         int x;
         int y;
 
+        g2.setFont(_GridLabelFont);
+        g2.setColor(s.getGridColor());
         for (int n = 0; n < gridlabels.length; n++) {
-            xy = proj.Pixels(gridlines[n], ymin, 0.0, settings);
-            FontMetrics fm = gc.getFontMetrics();
-            x = xy[0] + _Graph.getLocation().x - fm.stringWidth(gridlabels[n]) / 2;
-            y = _Graph.getY() + _Graph.getHeight() + fm.getHeight();
+            xy = proj.Pixels(gridlines[n], ymin, 0.0, s);
+            FontMetrics fm = g2.getFontMetrics();
+            x = xy[0] - fm.stringWidth(gridlabels[n]) / 2;
+            y = fm.getHeight();
 
-            gc.setFont(_GridLabelFont);
-            gc.drawString(gridlabels[n], x, y);
+            g2.drawString(gridlabels[n], x, y);
         }
     }
 
@@ -265,26 +268,28 @@ public class Simple2DAnnotation implements I2DAnnotationRenderer, ISimpleRendere
      * Render all Y grid labels
      *
      * @param gc
-     * @param settings
      */
-    public void RenderYGridLabels(Graphics gc, Graph2DSettings settings) {
-        double[] gridlines = _Graph.getSettings().getYMajorGrid();
-        String[] gridlabels = _Graph.getSettings().getYMajorGridLabels();
-        ICameraProjector proj = _Graph.getSettings().getProjector();
-        double ymin = _Graph.getSettings().getYLimits().getValueMin();
+    public void RenderYGridLabels(Graphics gc ) {
+        Graphics2D g2 = (Graphics2D) gc;
+        Graph2DSettings s = _Graph.getSettings();
+        double[] gridlines = s.getYMajorGrid();
+        String[] gridlabels = s.getYMajorGridLabels();
+        ICameraProjector proj = s.getProjector();
+        double xmin = s.getXLimits().getValueMin();
 
         int[] xy;
         int x;
         int y;
 
+        g2.setFont(_GridLabelFont);
+        g2.setColor(s.getGridColor());
         for (int n = 0; n < gridlabels.length; n++) {
-            xy = proj.Pixels(gridlines[n], ymin, 0.0, settings);
-            FontMetrics fm = gc.getFontMetrics();
-            y = xy[1] + _Graph.getLocation().y - fm.stringWidth(gridlabels[n]) / 2;
-            x = _Graph.getY() + _Graph.getHeight() + fm.getHeight();
+            xy = proj.Pixels(xmin, gridlines[n], 0.0, s);
+            FontMetrics fm = g2.getFontMetrics();
+            y = xy[1] + fm.getHeight();
+            x = 0;
 
-            gc.setFont(_GridLabelFont);
-            gc.drawString(gridlabels[n], x, y);
+            g2.drawString(gridlabels[n], x, y);
         }
     }
 
@@ -328,8 +333,8 @@ public class Simple2DAnnotation implements I2DAnnotationRenderer, ISimpleRendere
 
         g2.setColor(_GridLabelColor);
 
-        RenderXGridLabels(gc, settings);
-        RenderYGridLabels(gc, settings);
+        RenderXGridLabels(gc);
+        RenderYGridLabels(gc);
     }
 
 }
