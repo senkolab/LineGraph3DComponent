@@ -188,7 +188,7 @@ public class GraphLayoutManager implements LayoutManager, LayoutManager2, Serial
             }
             if(bottom != null)
             {
-                bottom.setBounds(inner_l, inner_t, inner_r-inner_l, bdim.height);
+                bottom.setBounds(inner_l, inner_b, inner_r-inner_l, bdim.height);
             }
             if(left != null)
             {
