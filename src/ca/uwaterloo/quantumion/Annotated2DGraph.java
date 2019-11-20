@@ -139,6 +139,23 @@ public class Annotated2DGraph extends JPanel {
         _Graph.setLocation(new Point(_Margins.Left, _Margins.Bottom));
         _Graph.invalidate();
     }
+    
+    /**
+     * Get the graph settings
+     * @return 
+     */
+    public Graph2DSettings getSettings() {
+        return _Graph.getSettings();
+    }
+
+    /**
+     * Set the graph settings
+     * @param value 
+     */
+    public void setSettings(Graph2DSettings value) {
+        _Graph.setSettings(value);
+        invalidate();
+    }
 
     /**
      * Title Object
@@ -188,6 +205,7 @@ public class Annotated2DGraph extends JPanel {
          */
         public void setColor(Color c) {
             setForeground(c);
+            invalidate();
         }
 
         /**
@@ -198,6 +216,7 @@ public class Annotated2DGraph extends JPanel {
         public Color getColor() {
             return getForeground();
         }
+
     }
 
     /**
