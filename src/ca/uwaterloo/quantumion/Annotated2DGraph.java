@@ -35,7 +35,7 @@ public class Annotated2DGraph extends JPanel {
 
     protected AnnotationMargins _Margins = new AnnotationMargins(10, 10, 10, 25);
     protected LineGraph2D _Graph;
-    protected TitlePanel _TitlePanel;
+    private TitlePanel _TitlePanel;
     protected XAnnotationPanel _XPanel;
     protected YAnnotationPanel _YPanel;
 
@@ -97,8 +97,8 @@ public class Annotated2DGraph extends JPanel {
         this.setLayout(lm);
         this.add(_Graph, GraphLayoutManager.CENTER);
         _Graph.setVisible(true);
-        this.add(_TitlePanel, GraphLayoutManager.TOP);
-        _TitlePanel.setVisible(true);
+        this.add(getTitlePanel(), GraphLayoutManager.TOP);
+        getTitlePanel().setVisible(true);
         this.add(_XPanel, GraphLayoutManager.BOTTOM);
         _XPanel.setVisible(true);
         this.add(_YPanel, GraphLayoutManager.LEFT);
@@ -160,7 +160,7 @@ public class Annotated2DGraph extends JPanel {
     /**
      * Title Object
      */
-    protected final class TitlePanel extends JLabel {
+    public final class TitlePanel extends JLabel {
 
         public String _text;
 
@@ -351,6 +351,20 @@ public class Annotated2DGraph extends JPanel {
             this._label = _label;
             invalidate();
         }
+    }
+
+    /**
+     * @return the _TitlePanel
+     */
+    public TitlePanel getTitlePanel() {
+        return _TitlePanel;
+    }
+
+    /**
+     * @param _TitlePanel the _TitlePanel to set
+     */
+    public void setTitlePanel(TitlePanel _TitlePanel) {
+        this._TitlePanel = _TitlePanel;
     }
 
 }

@@ -430,8 +430,8 @@ public final class LineGraph2D extends JPanel implements ComponentListener {
     public void resize() {
         _Settings.getXLimits().setPixMin(0);
         _Settings.getXLimits().setPixMax(getWidth());
-        _Settings.getYLimits().setPixMin(0);
-        _Settings.getYLimits().setPixMax(getHeight());
+        _Settings.getYLimits().setPixMin(getHeight());
+        _Settings.getYLimits().setPixMax(0);
     }
 
     @Override

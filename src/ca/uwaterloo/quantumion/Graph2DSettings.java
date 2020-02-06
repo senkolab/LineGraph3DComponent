@@ -438,7 +438,7 @@ public class Graph2DSettings {
      */
     public Rectangle getPixelRectangle() {
         return new Rectangle(
-            _XLimits.getPixMin(), _YLimits.getPixMin(),
+            _XLimits.getPixMin(), _YLimits.getPixMax(),
             Math.abs(_XLimits.dPixel()), Math.abs(_YLimits.dPixel())
         );
     }
